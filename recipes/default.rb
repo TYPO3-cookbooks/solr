@@ -124,8 +124,6 @@ end
 # Libs
 #################################
 
-#mkdir solr/dist
-
 libs = [
   'analysis-extras',
   'cell',
@@ -142,13 +140,9 @@ libs.each do |lib|
   end
 end
 
-#cp -r apache-solr-$SOLR_VER/contrib solr/
-
 remote_file "#{node.solr.home}/typo3lib/solr-typo3-plugin-#{node.solr.typo3.plugin.version}.jar" do
   source node.solr.typo3.plugin.url
   owner node.tomcat.user
   group node.tomcat.group
   action :create_if_missing
 end
-
-# typo3 extension?
