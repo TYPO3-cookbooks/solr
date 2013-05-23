@@ -17,7 +17,26 @@
 # limitations under the License.
 #
 
+##############################
+# Tomcat setup
+##############################
+
 include_recipe "tomcat"
+
+# access protection
+all_nodes = search(:node, "*:*")
+ips = all_nodes.map{|n| n[:ipaddress]}
+
+# replace the server.xml with the one from this cookbook
+server_xml = resources("template[/etc/tomcat6/server.xml]")
+server_xml.cookbook "solr"
+server_xml.variables({
+  :ips => ips
+})
+
+##############################
+# SOLR deployment
+##############################
 
 ark "solr" do
   url      node.solr.link
