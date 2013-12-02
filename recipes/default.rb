@@ -90,6 +90,7 @@ languages.each do |lang|
     remote_file "#{node.solr.home}/#{file_path}" do
       owner node.tomcat.user
       group node.tomcat.group
+      checksum node.solr.checksum
       source "#{node.solr.typo3.repo}/solr/#{file_path}"
       action :create_if_missing
     end
