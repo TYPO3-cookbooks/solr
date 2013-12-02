@@ -1,3 +1,4 @@
+name             "solr"
 maintainer       "TYPO3 Association"
 maintainer_email "steffen.gebert@typo3.org"
 license          "MIT"
