@@ -31,7 +31,7 @@ ips = all_nodes.map{|n| n[:ipaddress]}
 server_xml = resources("template[/etc/tomcat6/server.xml]")
 server_xml.cookbook "solr"
 server_xml.variables({
-  :ips => ips
+  :ips => ips.sort
 })
 
 ##############################
