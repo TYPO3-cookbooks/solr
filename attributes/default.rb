@@ -1,5 +1,5 @@
 default[:solr][:version]   = "3.6.2"
-default[:solr][:link]      = "http://mirror.netcologne.de/apache.org/lucene/solr/#{solr.version}/apache-solr-#{solr.version}.tgz"
+default[:solr][:link]      = "http://archive.apache.org/dist/lucene/solr/#{solr.version}/apache-solr-#{solr.version}.tgz"
 default[:solr][:checksum]  = "537426dcbdd0dc82dd5bf16b48b6bcaf87cb4049c1245eea8dcb79eeaf3e7ac6" #sha265
 default[:solr][:home]          = "/usr/share/solr"
 
