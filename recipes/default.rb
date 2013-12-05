@@ -30,6 +30,10 @@ ips = all_nodes.map{|n| n[:ipaddress]}
 # replace the server.xml with the one from this cookbook
 server_xml = resources("template[/etc/tomcat6/server.xml]")
 server_xml.cookbook "solr"
+
+
+# whitelist srv112 (integration) as long as #49481 is not fixed
+ips << "217.29.36.51"
 server_xml.variables({
   :ips => ips.sort
 })
