@@ -8,4 +8,4 @@ default[:solr][:typo3][:plugin][:url] = "http://www.typo3-solr.com/fileadmin/fil
 
 default[:solr][:typo3][:repo] = "https://forge.typo3.org/projects/extension-solr/repository/revisions/master/raw/resources"
 
-default[:solr][:cores] = ["t3o_live", "t3o_latest", "t3o_testing"]
+default[:solr][:cores] = ["t3o_live", "t3o_latest", "t3o_testing", "t3o_deploy"]
