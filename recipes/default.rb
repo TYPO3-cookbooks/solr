@@ -97,6 +97,7 @@ languages.each do |lang|
       checksum node.solr.checksum
       source "#{node.solr.typo3.repo}/solr/#{file_path}"
       action :create_if_missing
+      notifies :restart, "service[tomcat]"
     end
   end
 end
@@ -121,6 +122,7 @@ end
     group node.tomcat.group
     source "#{node.solr.typo3.repo}/solr/#{file_path}"
     action :create_if_missing
+    notifies :restart, "service[tomcat]"
   end
 end
 
@@ -129,18 +131,21 @@ remote_file "#{node.tomcat.config_dir}/server.xml" do
   group node.tomcat.group
   source "#{node.solr.typo3.repo}/tomcat/server.xml"
   action :create_if_missing
+  notifies :restart, "service[tomcat]"
 end
 
 template "#{node.tomcat.context_dir}/solr.xml" do
   owner node.tomcat.user
   group node.tomcat.group
   source "context-solr.xml"
+  notifies :restart, "service[tomcat]"
 end
 
 template "#{node.solr.home}/solr.xml" do
   owner node.tomcat.user
   group node.tomcat.group
   source "solr-cores.xml"
+  notifies :restart, "service[tomcat]"
 end
 
 
@@ -161,6 +166,7 @@ libs.each do |lib|
   lib_file = "#{lib}-#{node.solr.version}.jar"
   link "#{node.solr.home}/dist/#{lib_file}" do
     to "/usr/local/solr-#{node.solr.version}/dist/#{lib_file}"
+    notifies :restart, "service[tomcat]"
   end
 end
 
@@ -169,4 +175,5 @@ remote_file "#{node.solr.home}/typo3lib/solr-typo3-plugin-#{node.solr.typo3.plug
   owner node.tomcat.user
   group node.tomcat.group
   action :create_if_missing
+  notifies :restart, "service[tomcat]"
 end
