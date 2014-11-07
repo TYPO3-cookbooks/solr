@@ -33,11 +33,19 @@ ipv4addresses = all_nodes.map{|n| n[:ipaddress]}
 # - filter out nodes that don't have a globally routable address
 # - tomcat only accepts expanded IPv6 addresses
 # - these addresses must not be so expanded that each group (double byte) is blown up to four chars (like 000a),
-#   but instead only the :: is allowed to expanded. Therefore we have to go using #groups and then concat these
-#   together using ":"
+#   but instead only the :: is allowed to expanded. Therefore we have to go using #groups (which gives us integers
+#   and convert them to hex and then concat these together using ":". OMFG
 
 require 'ipaddress'
-ipv6addresses = all_nodes.map{|n| n[:ip6address]}.reject{|ip| ip == '::1'}.map{|ip| IPAddress::IPv6.groups(ip).join(':')}
+ipv6addresses_compressed = all_nodes.map{|n| n[:ip6address]}.reject{|ip| ip == '::1'}
+# new we expand those
+ipv6addresses = []
+ipv6addresses_compressed.each do |ip_compressed|
+  # IPv6.groups gives us something like [10753,408,1,1,0,0,0,261]
+  # to_s(16) gives the hex representation of a fixnum (integer)
+  ipv6addresses << IPAddress::IPv6.groups(ip_compressed).map{|group_as_int| group_as_int.to_s(16)}.join(':')
+end
+
 
 
 # replace the server.xml with the one from this cookbook
