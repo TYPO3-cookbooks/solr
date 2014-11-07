@@ -25,15 +25,23 @@ include_recipe "tomcat"
 
 # access protection
 all_nodes = search(:node, "*:*")
-ips = all_nodes.map{|n| n[:ipaddress]}
-ips6 = all_nodes.map{|n| n[:ip6address]}
+
+# IPv4 is easy ;-)
+ipv4addresses = all_nodes.map{|n| n[:ipaddress]}
+
+# IPv6 is more tough
+# - filter out nodes that don't have a globally routable address
+# - tomcat only accepts expanded IPv6 addresses
+require 'ipaddress'
+ipv6addresses = all_nodes.map{|n| n[:ip6address]}.reject{|ip| ip == '::1'}.map{|ip| IPAddress::IPv6.expand(ip)}
+
 
 # replace the server.xml with the one from this cookbook
 server_xml = resources("template[/etc/tomcat6/server.xml]")
 server_xml.cookbook "solr"
 
 server_xml.variables({
-  :ips => ips.sort + ips6.sort
+  :ips => ipv4addresses.sort + ipv6addresses.sort
 })
 
 ##############################
