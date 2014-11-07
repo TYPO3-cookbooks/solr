@@ -26,13 +26,14 @@ include_recipe "tomcat"
 # access protection
 all_nodes = search(:node, "*:*")
 ips = all_nodes.map{|n| n[:ipaddress]}
+ips6 = all_nodes.map{|n| n[:ip6address]}
 
 # replace the server.xml with the one from this cookbook
 server_xml = resources("template[/etc/tomcat6/server.xml]")
 server_xml.cookbook "solr"
 
 server_xml.variables({
-  :ips => ips.sort
+  :ips => ips.sort + ips6.sort
 })
 
 ##############################
