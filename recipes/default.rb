@@ -48,20 +48,6 @@ ark "solr" do
   version  node.solr.version
   mode     0777
 end
-
-#execute "all permissions" do
-#  cmd "chmod -R 0777 /usr/local/solr"
-#end
-
-#link "#{node.tomcat.webapp_dir}/solr.war" do
-#  to "/usr/local/solr/dist/apache-solr-#{node.solr.version}.war"
-#end
-
-
-#file "#{node.tomcat.webapp_dir}/solr.war" do
-#  content IO.read("/usr/local/solr/dist/apache-solr-#{node.solr.version}.war")
-#end
-
 [
 #  "#{node.tomcat.webapp_dir}/solr",
   "#{node.solr.home}/dist",
@@ -106,7 +92,6 @@ end
 #if [ $LANGUAGE = "german" ]
 #wgetresource solr/typo3cores/conf/$LANGUAGE/german-common-nouns.txt
 
-	
 [
   'admin-extra.html',
   'currency.xml',
