@@ -32,8 +32,12 @@ ipv4addresses = all_nodes.map{|n| n[:ipaddress]}
 # IPv6 is more tough
 # - filter out nodes that don't have a globally routable address
 # - tomcat only accepts expanded IPv6 addresses
+# - these addresses must not be so expanded that each group (double byte) is blown up to four chars (like 000a),
+#   but instead only the :: is allowed to expanded. Therefore we have to go using #groups and then concat these
+#   together using ":"
+
 require 'ipaddress'
-ipv6addresses = all_nodes.map{|n| n[:ip6address]}.reject{|ip| ip == '::1'}.map{|ip| IPAddress::IPv6.expand(ip)}
+ipv6addresses = all_nodes.map{|n| n[:ip6address]}.reject{|ip| ip == '::1'}.map{|ip| IPAddress::IPv6.groups(ip).join(':')}
 
 
 # replace the server.xml with the one from this cookbook
