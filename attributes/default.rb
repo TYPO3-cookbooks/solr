@@ -6,6 +6,6 @@ default[:solr][:home]          = "/usr/share/solr"
 default[:solr][:typo3][:plugin][:version] = "1.2.0"
 default[:solr][:typo3][:plugin][:url] = "http://www.typo3-solr.com/fileadmin/files/solr/solr-typo3-plugin-#{node.solr.typo3.plugin.version}.jar"
 
-default[:solr][:typo3][:repo] = "https://forge.typo3.org/projects/extension-solr/repository/revisions/master/raw/resources"
+default[:solr][:typo3][:repo] = "https://raw.githubusercontent.com/TYPO3-Solr/ext-solr/master/Resources"
 
 default[:solr][:cores] = ["t3o_live", "t3o_latest", "t3o_testing", "t3o_deploy"]

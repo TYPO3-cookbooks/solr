@@ -98,9 +98,9 @@ languages.each do |lang|
     remote_file "#{node.solr.home}/#{file_path}" do
       owner node.tomcat.user
       group node.tomcat.group
-      checksum node.solr.checksum
-      source "#{node.solr.typo3.repo}/solr/#{file_path}"
+      source "#{node.solr.typo3.repo}/Solr/#{file_path}"
       action :create_if_missing
+      ignore_failure true
       notifies :restart, "service[tomcat]"
     end
   end
@@ -123,7 +123,7 @@ end
   remote_file "#{node.solr.home}/#{file_path}" do
     owner node.tomcat.user
     group node.tomcat.group
-    source "#{node.solr.typo3.repo}/solr/#{file_path}"
+    source "#{node.solr.typo3.repo}/Solr/#{file_path}"
     action :create_if_missing
     notifies :restart, "service[tomcat]"
   end
