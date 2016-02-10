@@ -40,7 +40,7 @@ require 'ipaddress'
 ipv6addresses_compressed = all_nodes.map{|n| n[:ip6address]}.reject{|ip| ip == '::1'}
 # new we expand those
 ipv6addresses = []
-ipv6addresses_compressed.each do |ip_compressed|
+ipv6addresses_compressed.reject{|ip6| ip6.nil?}.each do |ip_compressed|
   # IPv6.groups gives us something like [10753,408,1,1,0,0,0,261]
   # to_s(16) gives the hex representation of a fixnum (integer)
   ipv6addresses << IPAddress::IPv6.groups(ip_compressed).map{|group_as_int| group_as_int.to_s(16)}.join(':')
