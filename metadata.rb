@@ -6,5 +6,5 @@ description      "Installs/Configures solr"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.2.10"
 
-depends "tomcat", "~> 0.12.0"
-depends "ark", "~> 0.4.0"
+depends "tomcat"
+depends "ark"
