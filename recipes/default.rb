@@ -52,8 +52,9 @@ end
 server_xml = resources("template[/etc/tomcat6/server.xml]")
 server_xml.cookbook "solr"
 
+# allow srv107 no matter what happens
 server_xml.variables({
-  :ips => ipv4addresses.sort + ipv6addresses.sort
+  :ips => ipv4addresses.sort + ipv6addresses.sort + [ "2a00:b580:8000:301:0:0:0:107" ]
 })
 
 ##############################
